@@ -12,5 +12,5 @@
         }
     },
     "postCreateCommand": "pipx install algokit",
-    "postStartCommand": "algokit localnet start"
+    "postStartCommand": "pip install algokit"
 }
