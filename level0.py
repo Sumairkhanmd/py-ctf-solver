@@ -1,5 +1,8 @@
 from typing import Literal
 
+import beaker as bk
+import pyteal as pt
+
 from algokit_utils import (
     get_algod_client,
     get_default_localnet_config,
@@ -8,6 +11,7 @@ from algokit_utils import (
     ensure_funded,
     EnsureBalanceParameters,
     TestNetDispenserApiClient,
+    ApplicationClient,
 )
 from algosdk.transaction import (
     wait_for_confirmation,
@@ -46,6 +50,19 @@ def main(network: Literal["localnet", "testnet"] = "localnet"):
         ))
     else:
         raise ValueError(f"Unknown network: {network}")
+
+    # THIS IS AN EXAMPLE OF A BEAKER/PYTEAL APPLICATION. THIS IS NOT NEEDED FOR THIS LEVEL
+    #  AND IT'S JUST FOR ILLUSTRATION PURPOSES.
+    supporting_app = bk.Application("SupportingApp")
+
+    @supporting_app.external
+    def hello(name: pt.abi.String, *, output: pt.abi.String) -> pt.Expr:
+        # Set output to the result of `Hello, `+name
+        return output.set(pt.Concat(pt.Bytes("Hello, "), name.get()))
+
+    supporting_app_spec = supporting_app.build(algod)
+    supporting_app_client = ApplicationClient(algod, supporting_app_spec, signer=solver.signer)
+    # END OF EXAMPLE APPLICATION
 
     wait_for_confirmation(
         algod,
