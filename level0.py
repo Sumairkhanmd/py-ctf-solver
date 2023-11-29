@@ -61,5 +61,5 @@ def main(network: Literal["localnet", "testnet"] = "localnet"):
 
 
 if __name__ == "__main__":
-    main()
-    # main("testnet")
+    # main()
+    main("testnet")
