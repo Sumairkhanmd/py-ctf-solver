@@ -21,7 +21,7 @@ from algosdk.util import algos_to_microalgos
 from dotenv import load_dotenv
 
 
-LEVEL_APP_ID=487250303 # TODO: fill in the app ID.
+LEVEL_APP_ID=487250388 # TODO: fill in the app ID.
 
 
 def main(network: Literal["localnet", "testnet"] = "localnet"):
@@ -74,6 +74,7 @@ def main(network: Literal["localnet", "testnet"] = "localnet"):
             ).sign(solver.private_key)
         )
     )
+    
     print("success.")
 
 
